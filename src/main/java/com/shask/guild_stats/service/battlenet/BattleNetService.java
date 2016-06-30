@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Min;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -66,7 +67,7 @@ public class BattleNetService {
      * @param sizeOfTop size of the list wanted
      * @return Sorted List of unique character with the highest achievement points
      */
-    public List<Character> getAchievementRanking(int sizeOfTop) {
+    public List<Character> getAchievementRanking(@Min(0) int sizeOfTop) {
         //Page of the size sizeOfTheList * Number of potential character on the same account on 3 server on the same cluster(21)
         PageRequest pageRequest = new PageRequest(0, sizeOfTop * 21, Sort.Direction.DESC, "achievement");
         Page<Character> p = characterDAO.findAll(pageRequest);
@@ -78,13 +79,13 @@ public class BattleNetService {
      * Get a List of {sizeOfRanking} Charactere surrounding the character with {idCharacter} on a achievement point level
      *
      * @param idCharacter   Character to compare to
-     * @param sizeOfRanking Size of the total list
+     * @param sizeOfRanking Size of the total list (minimum value : 3
      * @return a List of character ordered by achievement points
      */
-    public List<Character> getAchievementRankingAroundCharacter(int idCharacter, int sizeOfRanking) {
+    public List<Character> getAchievementRankingAroundCharacter(@Min(1) int idCharacter,@Min(3) int sizeOfRanking) {
         int sizeGreater, sizeBelow;
         if (sizeOfRanking % 2 == 0) {
-            sizeGreater = (sizeOfRanking / 2) + 1;
+            sizeGreater = (sizeOfRanking / 2) - 1;
             sizeBelow = (sizeOfRanking / 2);
         } else {
             sizeGreater = (sizeOfRanking / 2);
@@ -114,4 +115,17 @@ public class BattleNetService {
 
         return charAndSurroundingAchievers;
     }
+
+    public List<Character> getHonorableKillTopRanking(@Min(0)int sizeOfList)
+    {
+        //Page of the size sizeOfTheList * Number of potential character on the same account on 3 server on the same cluster(21)
+        PageRequest pageRequest = new PageRequest(0, sizeOfList , Sort.Direction.DESC, "honorableKill");
+        Page<Character> honorableKillTopList = characterDAO.findAll(pageRequest);
+        return honorableKillTopList.getContent();
+    }
+    public List<Character> getHonorableKillRankingAroundCharacter(@Min(0)int sizeOfList,long idCharacter)
+    {
+        return new ArrayList<Character>(); //TODO
+    }
+
 }

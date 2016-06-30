@@ -26,26 +26,50 @@ public class BattleNetServiceTest {
 
     @Test
     public void testRefreshAll() {
-        //battleNetService.refreshAll();
+        battleNetService.refreshAll();
         Assert.assertTrue(true);
     }
 
     @Test
     public void testTopAchievement() {
-        List<Character> charFromServ = battleNetService.getAchievementRanking(5);
-        Assert.assertFalse(charFromServ.isEmpty());
+        List<Character> charFromDB = battleNetService.getAchievementRanking(5);
+        Assert.assertFalse(charFromDB.isEmpty());
     }
 
     @Test
     public void testAroundingAchievement() {
-        List<Character> charFromServ = battleNetService.getAchievementRankingAroundCharacter(1, 5);
-        Assert.assertFalse(charFromServ.isEmpty());
+        List<Character> charFromDB = battleNetService.getAchievementRankingAroundCharacter(1, 5);
+        Assert.assertFalse(charFromDB.isEmpty());
     }
 
     @Test
     public void testAroundingAchievementSize() {
-        List<Character> charFromServ = battleNetService.getAchievementRankingAroundCharacter(1, 5);
-        Assert.assertTrue(charFromServ.size() == 5);
+        List<Character> charFromDB = battleNetService.getAchievementRankingAroundCharacter(1, 5);
+        Assert.assertTrue(charFromDB.size() == 5);
     }
+
+    @Test
+    public void testAroundingAchievementSizePair() {
+        List<Character> charFromDB = battleNetService.getAchievementRankingAroundCharacter(1, 6);
+        charFromDB.stream().forEach(a->System.out.println(a));
+        Assert.assertTrue(charFromDB.size() == 6);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAroundingAchievementParams() {
+        battleNetService.getAchievementRankingAroundCharacter(0, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testHonorableKillsParams() {
+        battleNetService.getHonorableKillTopRanking(-1);
+    }
+
+    @Test
+    public void testHonorableKillsSize() {
+        List<Character> charFromDB = battleNetService.getHonorableKillTopRanking(5);
+        Assert.assertTrue(charFromDB.size() == 5);
+    }
+
 }
 

@@ -25,12 +25,12 @@ public class CharactereWS {
     @ResponseBody
     public String getById(@PathVariable Integer id) {
         return id.toString();
-    }
+    }//TODO
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     @ResponseBody
     public String getById() {
-        return bNetService.getCharacter("Shask","les sentinelles").toString();
+        return bNetService.getCharacter("Shask","les sentinelles").toString(); //TODO
     }
 
 
