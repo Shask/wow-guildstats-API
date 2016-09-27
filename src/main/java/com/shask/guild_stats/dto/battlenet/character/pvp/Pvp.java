@@ -5,4 +5,11 @@ package com.shask.guild_stats.dto.battlenet.character.pvp;
  */
 public class Pvp {
     public Brackets brackets;
+
+    @Override
+    public String toString() {
+        return "Pvp{" +
+                "brackets=" + brackets +
+                '}';
+    }
 }

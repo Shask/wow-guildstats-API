@@ -6,7 +6,10 @@ package com.shask.guild_stats.dto.battlenet.character;
 public class EmblemDTO {
     public int icon;
     public String iconColor;
+    public byte iconColorId;
     public byte border;
     public String borderColor;
+    public byte borderColorId;
     public String backgroundColor;
+    public byte backgroundColorId;
 }

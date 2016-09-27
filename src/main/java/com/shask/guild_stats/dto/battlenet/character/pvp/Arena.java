@@ -12,4 +12,18 @@ public class Arena {
     public int seasonPlayed;
     public int seasonWon;
     public int seasonLost;
+
+    @Override
+    public String toString() {
+        return "Arena{" +
+                "slug='" + slug + '\'' +
+                ", rating=" + rating +
+                ", weeklyPlayed=" + weeklyPlayed +
+                ", weeklyWon=" + weeklyWon +
+                ", weeklyLost=" + weeklyLost +
+                ", seasonPlayed=" + seasonPlayed +
+                ", seasonWon=" + seasonWon +
+                ", seasonLost=" + seasonLost +
+                '}';
+    }
 }

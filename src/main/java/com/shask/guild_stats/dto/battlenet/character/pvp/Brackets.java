@@ -1,5 +1,6 @@
 package com.shask.guild_stats.dto.battlenet.character.pvp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -20,4 +21,19 @@ public class Brackets {
 
     @JsonProperty("ARENA_BRACKET_RBG")
     public Arena arenaRBG;
+
+    public Arena UNKNOWN;
+
+    @Override
+    public String toString() {
+        return "Brackets{" +
+                "arena2v2=" + arena2v2 +
+                ", arena3v3=" + arena3v3 +
+                ", arena5v5=" + arena5v5 +
+                ", arena2v2skir=" + arena2v2skir +
+                ", arena5v5skir=" + arena5v5skir +
+                ", arenaRBG=" + arenaRBG +
+                ", UNKNOWN=" + UNKNOWN +
+                '}';
+    }
 }

@@ -24,7 +24,6 @@ public interface CharacterDTOMapper {
                 .setLevel(dto.level)
                 .setRating2v2(dto.pvp.brackets.arena2v2.rating)
                 .setRating3v3(dto.pvp.brackets.arena3v3.rating)
-                .setRating5v5(dto.pvp.brackets.arena5v5.rating)
                 .setRatingRBG(dto.pvp.brackets.arenaRBG.rating)
                 .setThumbnail(dto.thumbnail)
                 .setRealm(dto.realm)

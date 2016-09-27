@@ -10,7 +10,8 @@ import com.shask.guild_stats.mapper.battlenet.CharacterDTOMapper;
 import com.shask.guild_stats.model.Character;
 import com.shask.guild_stats.utils.AchievementSorter;
 import jersey.repackaged.com.google.common.collect.Lists;
-import org.hibernate.dialect.identity.Chache71IdentityColumnSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +37,8 @@ public class BattleNetService {
     @Autowired
     CharacterDAO characterDAO;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BattleNetService.class);
+
 
     public void refreshAll() {
         GuildDTO gDto = battleNetClient.getGuild(GuildParams.MEMBERS);
@@ -50,6 +53,7 @@ public class BattleNetService {
 
         //If the data from BattleNet is more resent then what we have in DB
         if (charBD == null || LocalDateTime.ofInstant(Instant.ofEpochMilli(charDTO.lastModified), ZoneId.systemDefault()).isAfter(charBD.getLastModified())) {
+          //  LOGGER.info(charDTO.toString());
             updatedChar = CharacterDTOMapper.toCharacter(charDTO);
             //launch update in BDD in a thread
 
