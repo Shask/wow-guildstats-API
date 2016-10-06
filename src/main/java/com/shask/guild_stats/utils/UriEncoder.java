@@ -1,7 +1,5 @@
 package com.shask.guild_stats.utils;
 
-import com.shask.guild_stats.api_client.WowProgressClient;
-
 /**
  * Created by Steven Fougeron on 21/06/16.
  */

@@ -1,9 +1,9 @@
 package com.shask.guild_stats.webservice;
 
-import com.shask.guild_stats.dto.battlenet.guild.GuildDTO;
-import com.shask.guild_stats.dto.battlenet.guild.Member;
-import com.shask.guild_stats.api_client.BattleNetClient;
-import com.shask.guild_stats.api_client.WowProgressClient;
+import com.shask.guild_stats.api_client.battlenet.dtos.guild.GuildDTO;
+import com.shask.guild_stats.api_client.battlenet.dtos.guild.Member;
+import com.shask.guild_stats.api_client.battlenet.BattleNetClient;
+import com.shask.guild_stats.api_client.wowprogress.WowProgressClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

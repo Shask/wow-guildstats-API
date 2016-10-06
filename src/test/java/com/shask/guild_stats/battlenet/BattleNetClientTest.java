@@ -1,11 +1,11 @@
 package com.shask.guild_stats.battlenet;
 
 import com.shask.guild_stats.GuildStatsApplication;
-import com.shask.guild_stats.api_client.BattleNetClient;
-import com.shask.guild_stats.api_client.params.CharacterParams;
-import com.shask.guild_stats.api_client.params.GuildParams;
-import com.shask.guild_stats.dto.battlenet.character.CharacterDTO;
-import com.shask.guild_stats.dto.battlenet.guild.GuildDTO;
+import com.shask.guild_stats.api_client.battlenet.BattleNetClient;
+import com.shask.guild_stats.api_client.battlenet.params.CharacterParams;
+import com.shask.guild_stats.api_client.battlenet.params.GuildParams;
+import com.shask.guild_stats.api_client.battlenet.dtos.character.CharacterDTO;
+import com.shask.guild_stats.api_client.battlenet.dtos.guild.GuildDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

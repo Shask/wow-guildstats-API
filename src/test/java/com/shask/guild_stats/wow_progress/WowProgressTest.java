@@ -1,7 +1,7 @@
 package com.shask.guild_stats.wow_progress;
 
 import com.shask.guild_stats.GuildStatsApplication;
-import com.shask.guild_stats.api_client.WowProgressClient;
+import com.shask.guild_stats.api_client.wowprogress.WowProgressClient;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,9 @@
 package com.shask.guild_stats.webservice;
 
 import com.shask.guild_stats.model.Character;
-import com.shask.guild_stats.service.battlenet.BattleNetService;
+import com.shask.guild_stats.service.battlenet.AchievementService;
+import com.shask.guild_stats.service.battlenet.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,29 +17,32 @@ import java.util.List;
 public class RankingWS {
 
     @Autowired
-    BattleNetService battleNetService;
+    CharacterService characterService;
+
+    @Autowired
+    AchievementService achievementService;
 
     @CrossOrigin
     @RequestMapping(value = "/achievement/top/{sizeOfTopTier}", method = RequestMethod.GET)
     public  @ResponseBody List<Character> getAchievementTopRanks(@PathVariable int sizeOfTopTier) {
-        return battleNetService.getAchievementRanking(sizeOfTopTier);
+        return achievementService.getRanking(sizeOfTopTier);
     }
 
     @RequestMapping(value = "/achievement/{idCharacter}/{sizeOfTierList}", method = RequestMethod.GET)
     public   @ResponseBody List<Character> getAchievementRanksSurroundingRanks(@PathVariable int idCharacter, @PathVariable int sizeOfTierList) {
-        return battleNetService.getAchievementRankingAroundCharacter(idCharacter, sizeOfTierList);
+        return characterService.getAchievementRankingAroundCharacter(idCharacter, sizeOfTierList);
     }
 
 
     @RequestMapping(value = "/honorable-kill/top/{sizeOfTopTier}", method = RequestMethod.GET)
     @ResponseBody
     public List<Character> getHonorableKillTopRanks(@PathVariable int sizeOfTopTier) {
-        return battleNetService.getHonorableKillTopRanking(sizeOfTopTier);
+        return characterService.getHonorableKillTopRanking(sizeOfTopTier);
     }
 
     @RequestMapping(value = "/honorable-kill/{idCharacter}/{sizeOfTierList}", method = RequestMethod.GET)
     @ResponseBody
     public List<Character> getHonorableKillSurroundingRanks(@PathVariable int idCharacter, @PathVariable int sizeOfTierList) {
-        return battleNetService.getHonorableKillRankingAroundCharacter(idCharacter, sizeOfTierList);
+        return characterService.getHonorableKillRankingAroundCharacter(idCharacter, sizeOfTierList);
     }
 }
