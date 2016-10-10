@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  */
 
 @Entity(name = "WOW_CHARACTER")
-public class Character implements Serializable{
+public class Character implements Serializable {
 
 
     @Column(name = "last_modified")
@@ -24,6 +24,12 @@ public class Character implements Serializable{
     private byte race;
     private byte gender;
     private short level;
+
+    private int ilvl;
+    @Column(name = "ilvl_equiped")
+    private int ilvlEquiped;
+
+
     private long achievement;
     private String thumbnail;
     @Column(name = "honorable_kill")
@@ -57,6 +63,8 @@ public class Character implements Serializable{
         rating5v5 = builder.rating5v5;
         ratingRBG = builder.ratingRBG;
         realm = builder.realm;
+        ilvl = builder.ilvl;
+        ilvlEquiped = builder.ilvlEquiped;
 
     }
 
@@ -76,7 +84,20 @@ public class Character implements Serializable{
         private int rating3v3;
         private int rating5v5;
         private int ratingRBG;
-        public String realm;
+        private String realm;
+
+        private int ilvl;
+        private int ilvlEquiped;
+
+        public Builder setIlvl(int ilvl) {
+            this.ilvl = ilvl;
+            return this;
+        }
+
+        public Builder setIlvlEquiped(int ilvlEquiped) {
+            this.ilvlEquiped = ilvlEquiped;
+            return this;
+        }
 
         public Builder setRealm(String realm) {
             this.realm = realm;
@@ -182,6 +203,14 @@ public class Character implements Serializable{
         this.name = name;
     }
 
+    public String getRealm() {
+        return realm;
+    }
+
+    public void setRealm(String realm) {
+        this.realm = realm;
+    }
+
     public byte getClasse() {
         return classe;
     }
@@ -212,6 +241,22 @@ public class Character implements Serializable{
 
     public void setLevel(short level) {
         this.level = level;
+    }
+
+    public int getIlvl() {
+        return ilvl;
+    }
+
+    public void setIlvl(int ilvl) {
+        this.ilvl = ilvl;
+    }
+
+    public int getIlvlEquiped() {
+        return ilvlEquiped;
+    }
+
+    public void setIlvlEquiped(int ilvlEquiped) {
+        this.ilvlEquiped = ilvlEquiped;
     }
 
     public long getAchievement() {

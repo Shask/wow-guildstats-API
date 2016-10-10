@@ -1,10 +1,12 @@
 package com.shask.guild_stats.api_client.battlenet.dtos.character.pvp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Steven Fougeron on 20/06/16.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Brackets {
     @JsonProperty("ARENA_BRACKET_2v2")
     public Arena arena2v2;
@@ -21,8 +23,6 @@ public class Brackets {
     @JsonProperty("ARENA_BRACKET_RBG")
     public Arena arenaRBG;
 
-    public Arena UNKNOWN;
-
     @Override
     public String toString() {
         return "Brackets{" +
@@ -32,7 +32,6 @@ public class Brackets {
                 ", arena2v2skir=" + arena2v2skir +
                 ", arena5v5skir=" + arena5v5skir +
                 ", arenaRBG=" + arenaRBG +
-                ", UNKNOWN=" + UNKNOWN +
                 '}';
     }
 }

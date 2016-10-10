@@ -15,9 +15,13 @@ CREATE TABLE IF NOT EXISTS wow_character (
 	honorable_kill bigint unsigned default 0,
 	rating_2v2 int default 0,
 	rating_3v3 int default 0,
-    rating_5v5 int default 0,
+	rating_5v5 int default 0,
 	rating_RBG int default 0,
+	ilvl int default 0,
+	ilvl_equiped int default 0,
 constraint pk_computer primary key (id));
+
+SET sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
 
 

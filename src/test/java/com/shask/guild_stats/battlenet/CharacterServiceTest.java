@@ -2,6 +2,7 @@ package com.shask.guild_stats.battlenet;
 
 import com.shask.guild_stats.GuildStatsApplication;
 
+import com.shask.guild_stats.dto.CharLittleDto;
 import com.shask.guild_stats.model.Character;
 import com.shask.guild_stats.service.battlenet.AchievementService;
 import com.shask.guild_stats.service.battlenet.CharacterService;
@@ -42,19 +43,19 @@ public class CharacterServiceTest {
 
     @Test
     public void testAroundingAchievement() {
-        List<Character> charFromDB = characterService.getAchievementRankingAroundCharacter(1, 5);
+        List<CharLittleDto> charFromDB = characterService.getAchievementRankingAroundCharacter(1, 5);
         Assert.assertFalse(charFromDB.isEmpty());
     }
 
     @Test
     public void testAroundingAchievementSize() {
-        List<Character> charFromDB = characterService.getAchievementRankingAroundCharacter(1, 5);
+        List<CharLittleDto> charFromDB = characterService.getAchievementRankingAroundCharacter(1, 5);
         Assert.assertTrue(charFromDB.size() == 5);
     }
 
     @Test
     public void testAroundingAchievementSizePair() {
-        List<Character> charFromDB = characterService.getAchievementRankingAroundCharacter(1, 6);
+        List<CharLittleDto> charFromDB = characterService.getAchievementRankingAroundCharacter(1, 6);
         charFromDB.stream().forEach(a->System.out.println(a));
         Assert.assertTrue(charFromDB.size() == 6);
     }
@@ -71,7 +72,7 @@ public class CharacterServiceTest {
 
     @Test
     public void testHonorableKillsSize() {
-        List<Character> charFromDB = characterService.getHonorableKillTopRanking(5);
+        List<CharLittleDto> charFromDB = characterService.getHonorableKillTopRanking(5);
         Assert.assertTrue(charFromDB.size() == 5);
     }
 

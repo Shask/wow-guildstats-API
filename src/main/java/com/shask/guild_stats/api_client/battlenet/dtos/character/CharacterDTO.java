@@ -1,9 +1,11 @@
 package com.shask.guild_stats.api_client.battlenet.dtos.character;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.shask.guild_stats.api_client.battlenet.dtos.character.item.Items;
 import com.shask.guild_stats.api_client.battlenet.dtos.character.progression.Progression;
 import com.shask.guild_stats.api_client.battlenet.dtos.character.pvp.Pvp;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CharacterDTO {
     public long lastModified;
     public String name;
@@ -23,6 +25,8 @@ public class CharacterDTO {
     public SpecDTO spec;
     public byte faction;
     public long totalHonorableKills;
+
+    public Items items;
 
     public Pvp pvp;
     public Progression progression;

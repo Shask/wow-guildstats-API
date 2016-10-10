@@ -1,6 +1,7 @@
 package com.shask.guild_stats.webservice;
 
 import com.shask.guild_stats.api_client.battlenet.BattleNetClient;
+import com.shask.guild_stats.dto.CharLittleDto;
 import com.shask.guild_stats.model.Character;
 import com.shask.guild_stats.service.battlenet.CharacterService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 /**
  * Created by Steven Fougeron on 31/05/16.
@@ -56,7 +59,7 @@ public class CharactereWS {
                     value = "Sorting criteria in the format: property(,asc|desc). " +
                             "Default sort order is ascending. " +
                             "Multiple sort criteria are supported.") })
-    public Page<Character> getAll(@ApiIgnore @PageableDefault(value = 50) Pageable pageable) {
+    public List<CharLittleDto> getAll(@ApiIgnore @PageableDefault(value = 50) Pageable pageable) {
         return characterService.findAll(pageable);
     }
 

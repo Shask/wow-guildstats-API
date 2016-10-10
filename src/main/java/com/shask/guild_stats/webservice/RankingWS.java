@@ -1,5 +1,6 @@
 package com.shask.guild_stats.webservice;
 
+import com.shask.guild_stats.dto.CharLittleDto;
 import com.shask.guild_stats.model.Character;
 import com.shask.guild_stats.service.battlenet.AchievementService;
 import com.shask.guild_stats.service.battlenet.CharacterService;
@@ -24,19 +25,21 @@ public class RankingWS {
 
     @CrossOrigin
     @RequestMapping(value = "/achievement/top/{sizeOfTopTier}", method = RequestMethod.GET)
-    public  @ResponseBody List<Character> getAchievementTopRanks(@PathVariable int sizeOfTopTier) {
+    @ResponseBody
+    public List<Character> getAchievementTopRanks(@PathVariable int sizeOfTopTier) {
         return achievementService.getRanking(sizeOfTopTier);
     }
 
     @RequestMapping(value = "/achievement/{idCharacter}/{sizeOfTierList}", method = RequestMethod.GET)
-    public   @ResponseBody List<Character> getAchievementRanksSurroundingRanks(@PathVariable int idCharacter, @PathVariable int sizeOfTierList) {
+    @ResponseBody
+    public List<CharLittleDto> getAchievementRanksSurroundingRanks(@PathVariable int idCharacter, @PathVariable int sizeOfTierList) {
         return characterService.getAchievementRankingAroundCharacter(idCharacter, sizeOfTierList);
     }
 
 
     @RequestMapping(value = "/honorable-kill/top/{sizeOfTopTier}", method = RequestMethod.GET)
     @ResponseBody
-    public List<Character> getHonorableKillTopRanks(@PathVariable int sizeOfTopTier) {
+    public List<CharLittleDto> getHonorableKillTopRanks(@PathVariable int sizeOfTopTier) {
         return characterService.getHonorableKillTopRanking(sizeOfTopTier);
     }
 

@@ -1,5 +1,6 @@
 package com.shask.guild_stats.service.battlenet;
 
+import com.google.common.collect.Lists;
 import com.shask.guild_stats.api_client.battlenet.BattleNetClient;
 import com.shask.guild_stats.api_client.battlenet.params.CharacterParams;
 import com.shask.guild_stats.api_client.battlenet.params.GuildParams;
@@ -7,9 +8,10 @@ import com.shask.guild_stats.dao.CharacterDAO;
 import com.shask.guild_stats.api_client.battlenet.dtos.character.CharacterDTO;
 import com.shask.guild_stats.api_client.battlenet.dtos.guild.GuildDTO;
 import com.shask.guild_stats.api_client.battlenet.mapper.CharacterDTOMapper;
+import com.shask.guild_stats.dto.CharLittleDto;
+import com.shask.guild_stats.mappers.CharacterMapper;
 import com.shask.guild_stats.model.Character;
 import com.shask.guild_stats.utils.AchievementSorter;
-import jersey.repackaged.com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,7 @@ public class CharacterService {
     }
 
     private Character refresh(String characterName, String realm) {
-        final CharacterDTO charDTO = battleNetClient.getCharacter(characterName, realm, CharacterParams.PVP, CharacterParams.PROGRESSION);
+        final CharacterDTO charDTO = battleNetClient.getCharacter(characterName, realm, CharacterParams.PVP, CharacterParams.PROGRESSION,CharacterParams.ITEMS);
         Character charBD = characterDAO.findByNameAndRealm(characterName, realm);
         final Character updatedChar;
 
@@ -75,7 +77,7 @@ public class CharacterService {
      * @param sizeOfRanking Size of the total list (minimum value : 3
      * @return a List of character ordered by achievement points
      */
-    public List<Character> getAchievementRankingAroundCharacter(@Min(1) int idCharacter,@Min(3) int sizeOfRanking) {
+    public List<CharLittleDto> getAchievementRankingAroundCharacter(@Min(1) int idCharacter,@Min(3) int sizeOfRanking) {
         int sizeGreater, sizeBelow;
         if (sizeOfRanking % 2 == 0) {
             sizeGreater = (sizeOfRanking / 2) - 1;
@@ -106,24 +108,24 @@ public class CharacterService {
         charAndSurroundingAchievers.add(CharInCenter);
         charAndSurroundingAchievers.addAll(lGreater.subList(0, sizeGreater));
 
-        return charAndSurroundingAchievers;
+        return CharacterMapper.INSTANCE.modelToDto(charAndSurroundingAchievers);
     }
 
-    public List<Character> getHonorableKillTopRanking(@Min(0)int sizeOfList)
+    public List<CharLittleDto> getHonorableKillTopRanking(@Min(0)int sizeOfList)
     {
         //Page of the size sizeOfTheList * Number of potential character on the same account on 3 server on the same cluster(21)
         PageRequest pageRequest = new PageRequest(0, sizeOfList , Sort.Direction.DESC, "honorableKill");
         Page<Character> honorableKillTopList = characterDAO.findAll(pageRequest);
-        return honorableKillTopList.getContent();
+        return CharacterMapper.INSTANCE.modelToDto(honorableKillTopList.getContent());
     }
     public List<Character> getHonorableKillRankingAroundCharacter(@Min(0)int sizeOfList,long idCharacter)
     {
         return new ArrayList<Character>(); //TODO
     }
 
-   public Page<Character> findAll(Pageable pageable)
+   public List<CharLittleDto> findAll(Pageable pageable)
     {
-        return characterDAO.findAll(pageable);
+        return CharacterMapper.INSTANCE.modelToDto(characterDAO.findAll(pageable).getContent());
     }
 
 }

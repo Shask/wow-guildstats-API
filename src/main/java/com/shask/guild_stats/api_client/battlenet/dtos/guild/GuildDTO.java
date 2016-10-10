@@ -1,6 +1,7 @@
 package com.shask.guild_stats.api_client.battlenet.dtos.guild;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shask.guild_stats.api_client.battlenet.dtos.character.EmblemDTO;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Map;
 /**
  * Created by Steven Fougeron on 01/06/16.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GuildDTO {
     public long lastModified;
     public String name;

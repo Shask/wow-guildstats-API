@@ -1,25 +1,26 @@
 package com.shask.guild_stats.api_client.battlenet;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shask.guild_stats.api_client.GenericClient;
+import com.shask.guild_stats.api_client.battlenet.dtos.character.CharacterDTO;
+import com.shask.guild_stats.api_client.battlenet.dtos.guild.GuildDTO;
 import com.shask.guild_stats.api_client.battlenet.params.BattleNetParams;
 import com.shask.guild_stats.api_client.battlenet.params.GuildParams;
 import com.shask.guild_stats.api_client.exception.ApiCallEnum;
 import com.shask.guild_stats.api_client.exception.ApiCallException;
-import com.shask.guild_stats.api_client.battlenet.dtos.character.CharacterDTO;
-import com.shask.guild_stats.api_client.battlenet.dtos.guild.GuildDTO;
 import com.shask.guild_stats.utils.UriEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
 
-import javax.ws.rs.core.MediaType;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 
 
@@ -27,7 +28,7 @@ import java.util.Arrays;
  * Created by Steven Fougeron on 27/05/16.
  */
 @Service
-public class BattleNetClient {
+public class BattleNetClient extends GenericClient{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BattleNetClient.class);
 
@@ -46,8 +47,8 @@ public class BattleNetClient {
     @Value("${wow.local}")
     private String local;
 
-    // private static final String ID = "/1";
-    private static final Gson gson = new GsonBuilder().create();
+    @Autowired
+    ObjectMapper mapper;
 
     /**
      * Call battleNet API to get a Character stats
@@ -75,10 +76,15 @@ public class BattleNetClient {
                 .append(API_KEY_PARAM)
                 .append(api_key);
 
-        ClientResponse response = battlenetRequest(urlBuilder.toString());
+        String response = apiGetRequest(urlBuilder.toString(),ApiCallEnum.BATTLE_NET_ERROR);
 
-        return response.getEntity(new GenericType<CharacterDTO>() {
-        });
+        try {
+            return mapper.readValue(response, CharacterDTO.class);
+        } catch (IOException e) {
+            String errMsg = "Error reading json from BNet for Characters";
+            LOGGER.error(errMsg);
+            throw new ApiCallException(errMsg, ApiCallEnum.BATTLE_NET_ERROR);
+        }
     }
 
     /**
@@ -105,27 +111,16 @@ public class BattleNetClient {
                 .append(API_KEY_PARAM)
                 .append(api_key);
 
-        ClientResponse response = battlenetRequest(urlBuilder.toString());
-
-        return response.getEntity(new GenericType<GuildDTO>() {
-        });
-    }
-
-    private ClientResponse battlenetRequest(String url) {
-        LOGGER.debug("Requesting url : " + url);
-        ClientConfig cfg = new DefaultClientConfig();
-        ClientResponse response = Client.create(cfg)
-                .resource(url)
-                .accept(MediaType.APPLICATION_JSON)
-                .get(ClientResponse.class);
-
-        if (response.getStatus() != 200) {
-            String errorMsg = "Failed HTTP request : error code = " + response.getStatus();
-            LOGGER.error(errorMsg);
-           throw new ApiCallException(errorMsg, ApiCallEnum.BATTLE_NET_ERROR);
+        String response = apiGetRequest(urlBuilder.toString(),ApiCallEnum.BATTLE_NET_ERROR);
+        try {
+            return mapper.readValue(response, GuildDTO.class);
+        } catch (IOException e) {
+            String errMsg = "Error reading json from BNet for Guilds";
+            LOGGER.error(errMsg);
+            throw new ApiCallException(errMsg, ApiCallEnum.BATTLE_NET_ERROR);
         }
-        return response;
     }
+
 
     /**
      * Take a BattlenetParams in parameter and parse it to a String ready to use in URL
